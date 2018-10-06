@@ -8,8 +8,9 @@ import (
 )
 
 type test struct {
-	foo *string
-	bar int
+	foo  *string
+	bar  int
+	flag bool
 }
 
 // reflectviz implements main structire for walking
@@ -40,6 +41,8 @@ func (r *reflectviz) reflectValue(data reflect.Value) {
 		r.showString(data)
 	case reflect.Ptr:
 		r.showPtr(data)
+	case reflect.Bool:
+		r.showBool(data)
 	}
 }
 
@@ -61,6 +64,10 @@ func (r *reflectviz) showString(value reflect.Value) {
 	fmt.Println(value.String())
 }
 
+func (r *reflectviz) showBool(value reflect.Value) {
+	fmt.Println(value.Bool())
+}
+
 // createNode provides creating of teh new node
 func (r *reflectviz) createNode(value reflect.Value) error {
 	return r.graph.AddNode("G", value.String(), nil)
@@ -75,8 +82,9 @@ func (r *reflectviz) showGraph(value reflect.Value) {
 func main() {
 	str := "bar"
 	t := test{
-		foo: &str,
-		bar: 10,
+		foo:  &str,
+		bar:  10,
+		flag: true,
 	}
 	r := &reflectviz{node: map[string]string{}}
 	r.reflectMethod(t)
