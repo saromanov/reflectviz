@@ -21,6 +21,7 @@ type reflectviz struct {
 }
 
 func (r *reflectviz) reflectMethod(i interface{}) {
+	r.graph = gographviz.NewGraph()
 	r.reflectValue(reflect.ValueOf(i))
 }
 
@@ -70,6 +71,7 @@ func (r *reflectviz) showGraph(value reflect.Value) {
 	output := r.graph.String()
 	fmt.Println(output)
 }
+
 func main() {
 	str := "bar"
 	t := test{
@@ -78,14 +80,4 @@ func main() {
 	}
 	r := &reflectviz{node: map[string]string{}}
 	r.reflectMethod(t)
-	graphAst, _ := gographviz.ParseString(`digraph G {}`)
-	graph := gographviz.NewGraph()
-	if err := gographviz.Analyse(graphAst, graph); err != nil {
-		panic(err)
-	}
-	graph.AddNode("G", "a", nil)
-	graph.AddNode("G", "b", nil)
-	graph.AddEdge("a", "b", true, nil)
-	output := graph.String()
-	fmt.Println(output)
 }
