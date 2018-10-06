@@ -17,6 +17,7 @@ type test struct {
 type reflectviz struct {
 	level int
 	node  map[string]string
+	graph *gographviz.Graph
 }
 
 func (r *reflectviz) reflectMethod(i interface{}) {
@@ -57,6 +58,11 @@ func (r *reflectviz) showStruct(value reflect.Value) {
 
 func (r *reflectviz) showString(value reflect.Value) {
 	fmt.Println(value.String())
+}
+
+// createNode provides creating of teh new node
+func (r *reflectviz) createNode(value reflect.Value) error {
+	return r.graph.AddNode("G", value.String(), nil)
 }
 func main() {
 	str := "bar"
