@@ -25,6 +25,12 @@ func (r *reflectviz) reflectMethod(i interface{}) {
 		data = data.Elem()
 	}
 	fmt.Println(data.Kind())
+	nodeName := fmt.Sprintf("%s", data.Kind())
+	_, ok := r.node[nodeName]
+	if ok {
+		return
+	}
+	r.node[nodeName] = "a"
 	r.level++
 	switch data.Kind() {
 	case reflect.Struct:
