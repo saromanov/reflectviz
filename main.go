@@ -24,13 +24,19 @@ func (r *reflectviz) reflectMethod(i interface{}) {
 		data = data.Elem()
 	}
 	fmt.Println(data.Kind())
-
+	r.level++
 	switch data.Kind() {
 	case reflect.Struct:
 		r.showStruct(data)
 	case reflect.String:
 		r.showString(data)
+	case reflect.Ptr:
+		r.showPtr(data)
 	}
+}
+
+func (r *reflectviz) showPtr(value reflect.Value) {
+	fmt.Println("Result: ", value.Elem().Kind())
 }
 
 func (r *reflectviz) showStruct(value reflect.Value) {
