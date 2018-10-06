@@ -12,7 +12,13 @@ type test struct {
 	bar int
 }
 
-func reflectMethod(i interface{}) {
+// reflectviz implements main structire for walking
+// thought objeject
+type reflectviz struct {
+	level int
+}
+
+func (r *reflectviz) reflectMethod(i interface{}) {
 	data := reflect.ValueOf(i)
 	if data.CanAddr() {
 		data = data.Elem()
@@ -21,24 +27,23 @@ func reflectMethod(i interface{}) {
 
 	switch data.Kind() {
 	case reflect.Struct:
-		showStruct(data)
+		r.showStruct(data)
 	case reflect.String:
-		showString(data)
+		r.showString(data)
 	}
 }
 
-func showStruct(value reflect.Value) {
+func (r *reflectviz) showStruct(value reflect.Value) {
 	fmt.Println(value.Type())
-
 	for i := 0; i < value.Type().NumField(); i++ {
 		inValue := value.Field(i)
-		reflectMethod(inValue)
+		r.reflectMethod(inValue)
 
 	}
 	fmt.Println(value.Type().NumField())
 }
 
-func showString(value reflect.Value) {
+func (r *reflectviz) showString(value reflect.Value) {
 	fmt.Println(value.String())
 }
 func main() {
@@ -47,7 +52,8 @@ func main() {
 		foo: &str,
 		bar: 10,
 	}
-	reflectMethod(t)
+	r := &reflectviz{}
+	r.reflectMethod(t)
 	graphAst, _ := gographviz.ParseString(`digraph G {}`)
 	graph := gographviz.NewGraph()
 	if err := gographviz.Analyse(graphAst, graph); err != nil {
