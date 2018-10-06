@@ -66,6 +66,7 @@ func (r *reflectviz) showString(value reflect.Value) {
 
 func (r *reflectviz) showBool(value reflect.Value) {
 	fmt.Println(value.Bool())
+	r.createNode(value)
 }
 
 // createNode provides creating of teh new node
