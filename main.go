@@ -24,7 +24,6 @@ func (r *reflectviz) reflectMethod(i interface{}) {
 }
 
 func (r *reflectviz) reflectValue(data reflect.Value) {
-	fmt.Println("KIND:", data.Kind())
 	nodeName := fmt.Sprintf("%s", data.Kind())
 	_, ok := r.node[nodeName]
 	if ok {
@@ -57,7 +56,7 @@ func (r *reflectviz) showStruct(value reflect.Value) {
 }
 
 func (r *reflectviz) showString(value reflect.Value) {
-	fmt.Println("String:", value.String())
+	fmt.Println(value.String())
 }
 func main() {
 	str := "bar"
