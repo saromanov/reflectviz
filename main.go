@@ -20,11 +20,11 @@ type reflectviz struct {
 }
 
 func (r *reflectviz) reflectMethod(i interface{}) {
-	data := reflect.ValueOf(i)
-	if data.CanAddr() {
-		data = data.Elem()
-	}
-	fmt.Println(data.Kind())
+	r.reflectValue(reflect.ValueOf(i))
+}
+
+func (r *reflectviz) reflectValue(data reflect.Value) {
+	fmt.Println("KIND:", data.Kind())
 	nodeName := fmt.Sprintf("%s", data.Kind())
 	_, ok := r.node[nodeName]
 	if ok {
@@ -50,7 +50,7 @@ func (r *reflectviz) showStruct(value reflect.Value) {
 	fmt.Println(value.Type())
 	for i := 0; i < value.Type().NumField(); i++ {
 		inValue := value.Field(i)
-		r.reflectMethod(inValue)
+		r.reflectValue(inValue)
 
 	}
 	fmt.Println(value.Type().NumField())
