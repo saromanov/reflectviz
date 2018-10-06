@@ -64,6 +64,12 @@ func (r *reflectviz) showString(value reflect.Value) {
 func (r *reflectviz) createNode(value reflect.Value) error {
 	return r.graph.AddNode("G", value.String(), nil)
 }
+
+// showGraph returns result graph
+func (r *reflectviz) showGraph(value reflect.Value) {
+	output := r.graph.String()
+	fmt.Println(output)
+}
 func main() {
 	str := "bar"
 	t := test{
