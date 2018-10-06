@@ -24,6 +24,7 @@ type reflectviz struct {
 func (r *reflectviz) reflectMethod(i interface{}) {
 	r.graph = gographviz.NewGraph()
 	r.reflectValue(reflect.ValueOf(i))
+	r.showGraph()
 }
 
 func (r *reflectviz) reflectValue(data reflect.Value) {
@@ -61,11 +62,10 @@ func (r *reflectviz) showStruct(value reflect.Value) {
 }
 
 func (r *reflectviz) showString(value reflect.Value) {
-	fmt.Println(value.String())
+	r.createNode(value)
 }
 
 func (r *reflectviz) showBool(value reflect.Value) {
-	fmt.Println(value.Bool())
 	r.createNode(value)
 }
 
@@ -75,7 +75,7 @@ func (r *reflectviz) createNode(value reflect.Value) error {
 }
 
 // showGraph returns result graph
-func (r *reflectviz) showGraph(value reflect.Value) {
+func (r *reflectviz) showGraph() {
 	output := r.graph.String()
 	fmt.Println(output)
 }
