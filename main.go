@@ -43,7 +43,7 @@ func (r *reflectviz) reflectValue(data reflect.Value) {
 }
 
 func (r *reflectviz) showPtr(value reflect.Value) {
-	fmt.Println("Result: ", value.Elem().Kind())
+	r.reflectValue(value.Elem())
 }
 
 func (r *reflectviz) showStruct(value reflect.Value) {
@@ -57,7 +57,7 @@ func (r *reflectviz) showStruct(value reflect.Value) {
 }
 
 func (r *reflectviz) showString(value reflect.Value) {
-	fmt.Println(value.String())
+	fmt.Println("String:", value.String())
 }
 func main() {
 	str := "bar"
