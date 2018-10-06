@@ -16,6 +16,7 @@ type test struct {
 // thought objeject
 type reflectviz struct {
 	level int
+	node  map[string]string
 }
 
 func (r *reflectviz) reflectMethod(i interface{}) {
@@ -58,7 +59,7 @@ func main() {
 		foo: &str,
 		bar: 10,
 	}
-	r := &reflectviz{}
+	r := &reflectviz{node: map[string]string{}}
 	r.reflectMethod(t)
 	graphAst, _ := gographviz.ParseString(`digraph G {}`)
 	graph := gographviz.NewGraph()
